@@ -34,7 +34,6 @@ namespace TesseractOCRTest.Services
         {
             try
             {
-                var ms = new MemoryStream();
                 if (detectRequest.formFile is null)
                 {
                     return new BaseResponse(new OperationResult(ErrorCode.NoFileError, "File Error"));
@@ -44,6 +43,7 @@ namespace TesseractOCRTest.Services
                     return new BaseResponse(new OperationResult(ErrorCode.EnterLangError, "Lang Error"));
                 }
 
+                var ms = new MemoryStream();
                 await detectRequest.formFile.CopyToAsync(ms);
                 ms.Seek(0, SeekOrigin.Begin);
                 var engine = new TesseractEngine(tessDataPath, detectRequest.lang);
